@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_ordenar"
+        android:icon="@drawable/ic_action_filter"
+        android:title="Item"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/menu_ordenar_asc"
+                android:title="A - Z" />
+            <item
+                android:id="@+id/menu_ordenar_desc"
+                android:title="Z - A" />
+
+
+        </menu>
+
+
+    </item>
+
+
+</menu>
