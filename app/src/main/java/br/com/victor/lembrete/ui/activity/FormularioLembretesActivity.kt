@@ -8,6 +8,8 @@ import br.com.victor.lembrete.databinding.ActivityFormularioLembretesBinding
 import br.com.victor.lembrete.dialog.FormularioImagemDialog
 import br.com.victor.lembrete.extensions.tentaCarregarImagem
 import br.com.victor.lembrete.model.Lembrete
+import br.com.victor.lembrete.preferences.dataStore
+import br.com.victor.lembrete.preferences.usuarioLogado
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -87,25 +89,43 @@ class FormularioLembretesActivity : AppCompatActivity() {
     private fun configuraBotaoSalvar() {
         val botaoSalvar = binding.activityFormularioLembretesBotao
         botaoSalvar.setOnClickListener {
-            val lembreteCriado = criaLembrete()
+            lifecycleScope.launch{
+                launch {
+                    dataStore.data.collect{preferences ->
+                        preferences[usuarioLogado]?.let {usuarioId ->
+                            val lembreteCriado = criaLembrete(usuarioId)
+                            lembreteDao.salva(lembreteCriado)
+                            finish()
 
-            lifecycleScope.launch {
-                lembreteDao.salva(lembreteCriado)
-                finish()
+                        }
+
+                    }
+                }
+
             }
+
+
+
+
 
 
         }
     }
 
-    private fun criaLembrete(): Lembrete {
+    private fun criaLembrete(usuarioId: String): Lembrete {
         val campoTitulo = binding.activityFormularioLembretesTextinputedittextTitulo
         val titulo = campoTitulo.text.toString()
 
         val campoDesc = binding.activityFormularioLembretesTextinputedittextDesc
         val desc = campoDesc.text.toString()
 
-        return Lembrete(id = lembreteId, titulo = titulo, descricao = desc, imagem = url)
+        return Lembrete(
+            id = lembreteId,
+            titulo = titulo,
+            descricao = desc,
+            imagem = url,
+            usuarioId = usuarioId
+        )
     }
 
 }

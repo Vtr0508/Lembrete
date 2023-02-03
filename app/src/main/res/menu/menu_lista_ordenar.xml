@@ -21,6 +21,11 @@
 
 
     </item>
+    <item
+        android:id="@+id/menu_perfil"
+        android:icon="@drawable/ic_action_perfil"
+        android:title="Perfil"
+        app:showAsAction="ifRoom" />
 
 
 </menu>

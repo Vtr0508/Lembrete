@@ -26,9 +26,12 @@ interface LembreteDao {
     fun buscaPorId(id: Long): Flow<Lembrete?>
 
     @Query("SELECT * FROM Lembrete ORDER BY titulo ASC")
-    suspend fun buscaAsc(): List<Lembrete>
+    suspend fun buscaAsc(): List<Lembrete>?
 
     @Query("SELECT * FROM Lembrete ORDER BY titulo DESC")
-    suspend fun buscaDesc(): List<Lembrete>
+    suspend fun buscaDesc(): List<Lembrete>?
+
+    @Query("SELECT * FROM lembrete WHERE usuarioId = :usuarioId")
+    fun buscaLembreteUsuario(usuarioId: String): Flow<List<Lembrete>>
 
 }

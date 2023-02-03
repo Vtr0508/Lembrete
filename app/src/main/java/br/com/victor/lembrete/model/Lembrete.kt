@@ -11,5 +11,6 @@ data class Lembrete(
      @PrimaryKey(autoGenerate = true) var id: Long = 0L,
      val titulo: String,
      val descricao: String,
-     val imagem:String? = null
+     val imagem:String? = null,
+     val usuarioId: String? = null
 ): Parcelable
